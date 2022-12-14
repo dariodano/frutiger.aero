@@ -1,0 +1,58 @@
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+// Set up the player
+const playerWidth = 50;
+const playerHeight = 50;
+playerX = (canvas.width - playerWidth) / 2;
+const playerY = canvas.height - playerHeight;
+
+// Set up the obstacles
+const obstacleWidth = 50;
+const obstacleHeight = 50;
+const obstacleX = Math.random() * (canvas.width - obstacleWidth);
+obstacleY = 0;
+
+// Set up the game loop
+let isGameOver = false;
+const gameLoop = () => {
+    if (isGameOver) {
+        // If the game is over, stop the loop
+        return;
+    }
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Move the obstacle down the screen
+    let obstacleY;
+    obstacleY += 5;
+
+    // Check if the obstacle has hit the bottom of the screen
+    if (obstacleY + obstacleHeight > canvas.height) {
+        // If it has, start the game over
+        isGameOver = true;
+    }
+
+// Draw the player and the obstacle to the canvas
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(playerX, playerY, playerWidth, playerHeight);
+    ctx.fillRect(obstacleX, obstacleY, obstacleWidth, obstacleHeight);
+
+// Request a new frame to continue the game loop
+    requestAnimationFrame(gameLoop);
+};
+
+// Start the game loop
+requestAnimationFrame(gameLoop);
+/*
+// Set up event listener for player movement
+document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+// Move the player to the left
+        playerX -= 5;
+    } else if (e.key === "ArrowRight") {
+// Move the player to the right
+        playerX += 5;
+    }
+});*/
